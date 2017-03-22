@@ -1,0 +1,15 @@
+.idea
+*.iml
+*.ipr
+*.iws
+*.orig
+*.rej
+**/.keep
+*.sdf
+*.suo
+*.vcxproj.user
+.svn
+.classpath
+.project
+.settings
+target
