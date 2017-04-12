@@ -40,7 +40,6 @@ class UnreliableNSQReceiver(
 
     val config = new NSQConfig()
     config.setConsumerName(nsqParams("nsq.channel").toString)
-      .setUserSpecifiedLookupAddress(true)
     config.setLookupAddresses(nsqParams("nsq.lookup.addresses").toString)
     config.setConnectTimeoutInMillisecond(nsqParams("nsq.connect.timeout.millisecond").toString.toInt)
     config.setMsgTimeoutInMillisecond(nsqParams("nsq.msg.timeout.millisecond").toString.toInt)
