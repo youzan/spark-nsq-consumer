@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-package com.youzan.bigdata.streaming.nsq
+package org.apache.spark.streaming.nsq
 
 /**
   * Created by chenjunzou on 2017/3/17.
   */
 
+
 import com.typesafe.scalalogging.slf4j.LazyLogging
+import com.youzan.bigdata.streaming.nsq.NSQMessageWrapper
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.streaming.dstream._
-
-import scala.collection.mutable.Map
 
 /**
   * Input stream that pulls messages from a Nsq Broker.
@@ -36,12 +36,17 @@ import scala.collection.mutable.Map
   * @param storageLevel RDD storage level.
   */
 
-class NsqInputDStream (
+class NSQInputDStream(
      _ssc: StreamingContext,
      nsqParams: Map[String, String],
-     storageLevel: StorageLevel = StorageLevel.MEMORY_AND_DISK)
+     storageLevel: StorageLevel = StorageLevel.MEMORY_ONLY_SER)
   extends ReceiverInputDStream[NSQMessageWrapper](_ssc) with LazyLogging {
 
-  def getReceiver() = new UnreliableNSQReceiver(nsqParams, storageLevel)
+  def getReceiver(): NSQReceiver = {
+    if (nsqParams("spark.streaming.receiver.writeAheadLog.enable").toBoolean)
+      new ReliableNSQReceiver(nsqParams, storageLevel)
+    else
+      new UnreliableNSQReceiver(nsqParams, storageLevel)
+  }
 }
 

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.youzan.bigdata</groupId>
-  <artifactId>streaming</artifactId>
+  <artifactId>spark-streaming-nsq_2.11</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
@@ -13,6 +13,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <scala.binary.version>2.11</scala.binary.version>
+    <spark.version>2.2.0</spark.version>
+    <spark.scope>provided</spark.scope>
   </properties>
 
   <dependencies>
@@ -20,21 +22,25 @@
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-yarn-client</artifactId>
       <version>2.6.5</version>
+      <scope>${spark.scope}</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-core_${scala.binary.version}</artifactId>
-      <version>1.6.3</version>
+      <version>${spark.version}</version>
+      <scope>${spark.scope}</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-sql_${scala.binary.version}</artifactId>
-      <version>1.6.3</version>
+      <version>${spark.version}</version>
+      <scope>${spark.scope}</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-streaming_${scala.binary.version}</artifactId>
-      <version>1.6.3</version>
+      <version>${spark.version}</version>
+      <scope>${spark.scope}</scope>
     </dependency>
     <dependency>
       <groupId>com.typesafe.scala-logging</groupId>
@@ -43,8 +49,8 @@
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-streaming-kafka_2.11</artifactId>
-      <version>1.6.3</version>
+      <artifactId>spark-streaming-kafka-0-8_2.11</artifactId>
+      <version>2.2.0</version>
     </dependency>
     <dependency>
       <groupId>com.alibaba</groupId>
@@ -54,13 +60,18 @@
     <dependency>
       <groupId>com.youzan</groupId>
       <artifactId>NSQ-Client</artifactId>
-      <version>2.2.20170406-RELEASE</version>
+      <version>2.3.20170803-RELEASE</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.31</version>
       <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.jpountz.lz4</groupId>
+      <artifactId>lz4</artifactId>
+      <version>1.3.0</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -83,12 +94,6 @@
       <artifactId>scalatest_2.11</artifactId>
       <version>3.0.1</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8.2</version>
-      <type>jar</type>
     </dependency>
   </dependencies>
   <build>
@@ -163,10 +168,8 @@
       <id>dev</id>
       <properties>
         <environment>dev</environment>
+        <spark.scope>compile</spark.scope>
       </properties>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
     </profile>
     <profile>
       <id>qa</id>
@@ -185,6 +188,9 @@
       <properties>
         <environment>online</environment>
       </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
     </profile>
   </profiles>
 </project>
