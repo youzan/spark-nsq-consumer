@@ -1,10 +1,11 @@
 package com.youzan.bigdata.streaming.nsq;
 
-import com.typesafe.scalalogging.slf4j.LazyLogging;
-import com.typesafe.scalalogging.slf4j.Logger;
 import com.youzan.nsq.client.MessageHandler;
 import com.youzan.nsq.client.entity.NSQMessage;
-import org.apache.log4j.spi.LoggerFactory;
+import org.apache.spark.streaming.nsq.NSQReceiver;
+import org.apache.spark.streaming.nsq.ReliableNSQReceiver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 
@@ -12,18 +13,20 @@ import java.io.Serializable;
 /**
  * Created by chenjunzou on 2017/3/20.
  */
-public class BaseMessageHandler implements MessageHandler, Serializable {
-    private UnreliableNSQReceiver receiver;
+public class BaseMessageHandler implements MessageHandler, Serializable{
+    private static final Logger logger = LoggerFactory.getLogger(BaseMessageHandler.class);
+
+    private NSQReceiver receiver;
     private int counter = 0;
-    public BaseMessageHandler(UnreliableNSQReceiver receiver) {
+    public BaseMessageHandler(NSQReceiver receiver) {
         this.receiver = receiver;
     }
 
     public void process(NSQMessage message) {
         counter ++;
-        if (counter % 1000 == 0) {
-            System.out.println("xxxxxxxx" + message.getReadableContent());
+        logger.debug("adding message:" + message.getMessageID());
+        if (receiver instanceof ReliableNSQReceiver) {
+            ((ReliableNSQReceiver) receiver).blockGenerator().addData(new NSQMessageWrapper(message));
         }
-        receiver.store(new NSQMessageWrapper(message));
     }
 }
