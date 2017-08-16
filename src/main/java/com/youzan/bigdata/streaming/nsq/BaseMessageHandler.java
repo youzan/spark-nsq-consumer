@@ -27,6 +27,8 @@ public class BaseMessageHandler implements MessageHandler, Serializable{
         logger.debug("adding message:" + message.getMessageID());
         if (receiver instanceof ReliableNSQReceiver) {
             ((ReliableNSQReceiver) receiver).blockGenerator().addData(new NSQMessageWrapper(message));
+        } else {
+            receiver.store(new NSQMessageWrapper(message));
         }
     }
 }
