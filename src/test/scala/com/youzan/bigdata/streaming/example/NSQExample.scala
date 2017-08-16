@@ -27,7 +27,7 @@ object NSQExample {
         .set("spark.streaming.backpressure.enabled", "true")
         .set("spark.streaming.receiver.writeAheadLog.enable", "true")
 
-      val config = Source.fromURL(getClass.getClassLoader.getResource("src/main/build/dev.properties"))
+      val config = Source.fromURL(getClass.getClassLoader.getResource("dev.properties"))
       val prop = new Properties()
       prop.load(config.bufferedReader())
 
