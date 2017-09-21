@@ -5,10 +5,11 @@ Reference to dev.properties files for configuration of nsq receiver. Try playing
 Usage: NSQExample <checkpoint-directory> <parallism>.
 
 ## Maven dependency
+```
 <dependency>
   <groupId>com.youzan.bigdata</groupId>
   <artifactId>spark-streaming-nsq_2.11</artifactId>
   <version>1.0.0</version>
 </dependency>
-
+```
 
