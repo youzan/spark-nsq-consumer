@@ -37,7 +37,7 @@ import org.apache.spark.streaming.dstream._
   */
 
 class NSQInputDStream(
-     _ssc: StreamingContext,
+     @transient _ssc: StreamingContext,
      nsqParams: Map[String, String],
      storageLevel: StorageLevel = StorageLevel.MEMORY_ONLY_SER)
   extends ReceiverInputDStream[NSQMessageWrapper](_ssc) with LazyLogging {
