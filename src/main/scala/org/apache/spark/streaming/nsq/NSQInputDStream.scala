@@ -43,7 +43,7 @@ class NSQInputDStream(
   extends ReceiverInputDStream[NSQMessageWrapper](_ssc) with LazyLogging {
 
   def getReceiver(): NSQReceiver = {
-    if (nsqParams("spark.streaming.receiver.writeAheadLog.enable").toBoolean)
+    if (_ssc.sparkContext.getConf.get("spark.streaming.receiver.writeAheadLog.enable", "false").toBoolean)
       new ReliableNSQReceiver(nsqParams, storageLevel)
     else
       new UnreliableNSQReceiver(nsqParams, storageLevel)
