@@ -4,7 +4,7 @@
 
   <groupId>com.youzan.bigdata</groupId>
   <artifactId>spark-streaming-nsq_2.11</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.2</version>
   <packaging>jar</packaging>
 
   <name>streaming</name>
