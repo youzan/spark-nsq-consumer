@@ -10,7 +10,7 @@ Reference to dev.properties files for configuration of nsq receiver. Try playing
 <dependency>
   <groupId>com.youzan.bigdata</groupId>
   <artifactId>spark-streaming-nsq_2.11</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
@@ -19,7 +19,7 @@ This connector consists of two version
 1. Unreliable
 2. Reliable
 
-The difference of the two is whether "spark.streaming.receiver.writeAheadLog.enable" is set to true.
+The difference of the two is whether "spark.streaming.receiver.writeAheadLog.enable" is set to true.<br>
 unreliable version is set to false and let the client ack messages automatically, and reliable one write messages
 via WALog, and ack messages once messages are stored to disk. <br>
 
