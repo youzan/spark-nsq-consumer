@@ -10,7 +10,7 @@ Reference to dev.properties files for configuration of nsq receiver. Try playing
 <dependency>
   <groupId>com.youzan.bigdata</groupId>
   <artifactId>spark-streaming-nsq_2.11</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
 </dependency>
 ```
 
