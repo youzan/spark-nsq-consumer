@@ -1,8 +1,8 @@
 package org.apache.spark.streaming.nsq
 
-import com.typesafe.scalalogging.slf4j.LazyLogging
 import com.youzan.nsq.client.{Consumer, ConsumerImplV2}
 import com.youzan.nsq.client.entity.NSQConfig
+import org.apache.spark.internal.Logging
 import org.apache.spark.storage.StorageLevel
 
 /**
@@ -12,7 +12,7 @@ abstract class AbstractNSQReceiver
     (nsqParams: Map[String, String],
      storageLevel: StorageLevel)
     extends NSQReceiver(storageLevel)
-      with LazyLogging {
+      with Logging {
 
   @transient var _consumer: Consumer = _
 
@@ -25,7 +25,7 @@ abstract class AbstractNSQReceiver
 
 
   def onStart() {
-    logger.info("Starting NSQ Consumer with topic-Channel: (" +
+    logInfo("Starting NSQ Consumer with topic-Channel: (" +
       nsqParams("nsq.topic") + ", " + nsqParams("nsq.channel") + ")")
 
     val config = new NSQConfig()

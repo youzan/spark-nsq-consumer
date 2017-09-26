@@ -1,8 +1,8 @@
 package org.apache.spark.streaming.nsq
 
-import com.typesafe.scalalogging.slf4j.LazyLogging
 import com.youzan.bigdata.streaming.nsq.{BaseMessageHandler, NSQMessageWrapper}
 import com.youzan.nsq.client.MessageHandler
+import org.apache.spark.internal.Logging
 import org.apache.spark.storage.{StorageLevel, StreamBlockId}
 import org.apache.spark.streaming.receiver.{BlockGenerator, BlockGeneratorListener}
 
@@ -15,7 +15,7 @@ class ReliableNSQReceiver(
         nsqParams: Map[String, String],
         storageLevel: StorageLevel)
   extends AbstractNSQReceiver(nsqParams, storageLevel)
-    with LazyLogging {
+    with Logging {
 
   private var _blockGenerator: BlockGenerator = null
 
@@ -28,7 +28,7 @@ class ReliableNSQReceiver(
   override def onStart(): Unit = {
     var newParam: Map[String, String] = nsqParams
     if (nsqParams("nsq.auto.ack").toBoolean) {
-      logger.warn("nsq.auto.ack should be turn off in reliable mode")
+      logWarning("nsq.auto.ack should be turn off in reliable mode")
     }
     super.onStart()
     _blockGenerator = supervisor.createBlockGenerator(new GeneratedBlockHandler)
@@ -55,7 +55,7 @@ class ReliableNSQReceiver(
       }
     }
     if (pushed) {
-      logger.info("block " + blockId + " pushed " + arrayBuffer.length + "messages")
+      logInfo("block " + blockId + " pushed " + arrayBuffer.length + "messages")
       for (msg <- arrayBuffer) {
         consumer.finish(msg.asInstanceOf[NSQMessageWrapper].getMessage)
       }

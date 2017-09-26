@@ -22,8 +22,9 @@ package org.apache.spark.streaming.nsq
   */
 
 
-import com.typesafe.scalalogging.slf4j.LazyLogging
 import com.youzan.bigdata.streaming.nsq.NSQMessageWrapper
+import org.apache.spark.SparkConf
+import org.apache.spark.internal.Logging
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.streaming.dstream._
@@ -38,12 +39,13 @@ import org.apache.spark.streaming.dstream._
 
 class NSQInputDStream(
      _ssc: StreamingContext,
+     sparkConf: SparkConf,
      nsqParams: Map[String, String],
      storageLevel: StorageLevel = StorageLevel.MEMORY_ONLY_SER)
-  extends ReceiverInputDStream[NSQMessageWrapper](_ssc) with LazyLogging {
+  extends ReceiverInputDStream[NSQMessageWrapper](_ssc) with Logging {
 
   def getReceiver(): NSQReceiver = {
-    if (nsqParams("spark.streaming.receiver.writeAheadLog.enable").toBoolean)
+    if (sparkConf.get("spark.streaming.receiver.writeAheadLog.enable", "false").toBoolean)
       new ReliableNSQReceiver(nsqParams, storageLevel)
     else
       new UnreliableNSQReceiver(nsqParams, storageLevel)
