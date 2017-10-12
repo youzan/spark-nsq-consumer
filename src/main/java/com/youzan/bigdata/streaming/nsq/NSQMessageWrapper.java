@@ -33,6 +33,7 @@ public class NSQMessageWrapper implements Serializable{
         int connectionID, diskQueueDataSize, nextConsumingInSecond;
         Address address = new Address("0.0.0.0","0","0", "topic",0);
         timestamp = new byte[s.readInt()];
+
         s.read(timestamp);
         attempts = new byte[s.readInt()];
         s.read(attempts);
@@ -41,8 +42,8 @@ public class NSQMessageWrapper implements Serializable{
         internalID = s.readLong();
         traceID = s.readLong();
         messageBody = new byte[s.readInt()];
-        s.read(messageBody);
-        //address = (Address) s.readObject();
+        s.readFully(messageBody);
+        address = (Address) s.readObject();
         connectionID = s.readInt();
         diskQueueOffset = s.readLong();
         diskQueueDataSize = s.readInt();
@@ -64,7 +65,7 @@ public class NSQMessageWrapper implements Serializable{
         s.writeLong(message.getTraceID());
         s.writeInt(message.getMessageBody().length);
         s.write(message.getMessageBody());
-        //s.writeObject(message.getAddress());
+        s.writeObject(message.getAddress());
         s.writeInt(message.getConnectionID());
         s.writeLong(message.getDiskQueueOffset());
         s.writeInt(message.getDiskQueueDataSize());
