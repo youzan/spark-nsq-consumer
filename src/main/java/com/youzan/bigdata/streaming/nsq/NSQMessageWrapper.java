@@ -31,7 +31,7 @@ public class NSQMessageWrapper implements Serializable{
         byte[] timestamp, attempts, messageID, messageBody;
         long internalID, traceID, diskQueueOffset;
         int connectionID, diskQueueDataSize, nextConsumingInSecond;
-        Address address = new Address("0.0.0.0","0","0", "topic",0);
+        Address address = null;
         timestamp = new byte[s.readInt()];
 
         s.read(timestamp);
