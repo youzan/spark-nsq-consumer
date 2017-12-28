@@ -15,7 +15,7 @@ import static com.youzan.bigdata.streaming.utils.Utils.longToBytes;
 /**
  * Created by chenjunzou on 2017/3/21.
  */
-
+@Deprecated
 public class NSQMessageWrapper implements Serializable{
     transient private NSQMessage message;
     public NSQMessageWrapper(NSQMessage message) {
@@ -27,48 +27,12 @@ public class NSQMessageWrapper implements Serializable{
     }
 
     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException{
-        s.defaultReadObject();
-        byte[] timestamp, attempts, messageID, messageBody;
-        long internalID, traceID, diskQueueOffset;
-        int connectionID, diskQueueDataSize, nextConsumingInSecond;
-        Address address = null;
-        timestamp = new byte[s.readInt()];
-
-        s.read(timestamp);
-        attempts = new byte[s.readInt()];
-        s.read(attempts);
-        messageID = new byte[s.readInt()];
-        s.read(messageID);
-        internalID = s.readLong();
-        traceID = s.readLong();
-        messageBody = new byte[s.readInt()];
-        s.readFully(messageBody);
-        address = (Address) s.readObject();
-        connectionID = s.readInt();
-        diskQueueOffset = s.readLong();
-        diskQueueDataSize = s.readInt();
-        nextConsumingInSecond = s.readInt();
-        message = new NSQMessage(timestamp,attempts, messageID,
-                longToBytes(internalID), longToBytes(traceID), longToBytes(diskQueueOffset),
-                intToBytes(diskQueueDataSize), messageBody, address, connectionID, nextConsumingInSecond);
+        throw new IOException("the wrapper class is deprecated because NSQMessage is serializable now and " +
+            "its constructor is changed often, the wrapper class is not needed any more");
     }
 
     private void writeObject(ObjectOutputStream s) throws IOException {
-        s.defaultWriteObject();
-        s.writeInt(message.getTimestamp().length);
-        s.write(message.getTimestamp());
-        s.writeInt(message.getAttempts().length);
-        s.write(message.getAttempts());
-        s.writeInt(message.getMessageID().length);
-        s.write(message.getMessageID());
-        s.writeLong(message.getInternalID());
-        s.writeLong(message.getTraceID());
-        s.writeInt(message.getMessageBody().length);
-        s.write(message.getMessageBody());
-        s.writeObject(message.getAddress());
-        s.writeInt(message.getConnectionID());
-        s.writeLong(message.getDiskQueueOffset());
-        s.writeInt(message.getDiskQueueDataSize());
-        s.writeInt(message.getNextConsumingInSecond());
+        throw new IOException("the wrapper class is deprecated because NSQMessage is serializable now and " +
+            "its constructor is changed often, the wrapper class is not needed any more");
     }
 }

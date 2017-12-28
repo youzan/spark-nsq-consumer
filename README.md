@@ -6,11 +6,21 @@ Reference to dev.properties files for configuration of nsq receiver. Try playing
 ```NSQExample <checkpoint-directory> <parallism>```
 
 ## Maven dependency
+<b>CAUTION</b> 
+for nsq-client before 2.4
 ```
 <dependency>
   <groupId>com.youzan.bigdata</groupId>
   <artifactId>spark-streaming-nsq_2.11</artifactId>
   <version>1.0.5</version>
+</dependency>
+```
+after 2.4
+```
+<dependency>
+  <groupId>com.youzan.bigdata</groupId>
+  <artifactId>spark-streaming-nsq_2.11</artifactId>
+  <version>1.0.6</version>
 </dependency>
 ```
 

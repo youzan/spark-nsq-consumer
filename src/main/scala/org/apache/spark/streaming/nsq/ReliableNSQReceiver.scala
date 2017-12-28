@@ -2,8 +2,9 @@ package org.apache.spark.streaming.nsq
 
 import java.util.Properties
 
-import com.youzan.bigdata.streaming.nsq.{BaseMessageHandler, NSQMessageWrapper}
+import com.youzan.bigdata.streaming.nsq.BaseMessageHandler
 import com.youzan.nsq.client.MessageHandler
+import com.youzan.nsq.client.entity.NSQMessage
 import org.apache.spark.internal.Logging
 import org.apache.spark.storage.{StorageLevel, StreamBlockId}
 import org.apache.spark.streaming.receiver.{BlockGenerator, BlockGeneratorListener}
@@ -49,7 +50,7 @@ class ReliableNSQReceiver(
     var exception: Exception = null
     while (!pushed && count <= 3) {
       try {
-        store(arrayBuffer.asInstanceOf[mutable.ArrayBuffer[NSQMessageWrapper]])
+        store(arrayBuffer.asInstanceOf[mutable.ArrayBuffer[NSQMessage]])
         pushed = true
       } catch {
         case ex: Exception =>
@@ -60,7 +61,7 @@ class ReliableNSQReceiver(
     if (pushed) {
       logInfo("block " + blockId + " pushed " + arrayBuffer.length + "messages")
       for (msg <- arrayBuffer) {
-        consumer.finish(msg.asInstanceOf[NSQMessageWrapper].getMessage)
+        consumer.finish(msg.asInstanceOf[NSQMessage])
       }
     } else {
       stop("Error while storing block into Spark", exception)

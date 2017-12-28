@@ -40,7 +40,7 @@ object NSQExample {
       val unionDStream = ssc.union(sources)
 
       val traceDstream = unionDStream
-        .flatMap(wrapper => wrapper.getMessage.getReadableContent.split(" "))
+        .flatMap(msq => msq.getReadableContent.split(" "))
         .map(w => {
           println(w)
           (w, 1)

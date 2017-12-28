@@ -26,6 +26,5 @@ class UnreliableNSQReceiver(
       nsqParams.setProperty("nsq.auto.ack", "true")
     }
     super.onStart()
-    super.onStart()
   }
 }
