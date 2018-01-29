@@ -36,11 +36,11 @@ object NSQExample {
 
       ssc.checkpoint(checkpointDirectory)
 
-      val sources = (1 to parallism).map(_ => new NSQInputDStream(ssc, ssc.sparkContext.getConf, prop.toMap))
+      val sources = (1 to parallism).map(_ => new NSQInputDStream(ssc, ssc.sparkContext.getConf, prop))
       val unionDStream = ssc.union(sources)
 
       val traceDstream = unionDStream
-        .flatMap(wrapper => wrapper.getMessage.getReadableContent.split(" "))
+        .flatMap(msq => msq.getReadableContent.split(" "))
         .map(w => {
           println(w)
           (w, 1)

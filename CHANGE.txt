@@ -1,0 +1,6 @@
+v1.0.4
+change API to NSQInputDstream(StreamingContext, SparkConf, Properties)
+
+v1.0.6
+deprecate NSQMessageWrapper。 major API change
+

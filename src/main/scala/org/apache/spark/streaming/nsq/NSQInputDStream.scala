@@ -22,7 +22,9 @@ package org.apache.spark.streaming.nsq
   */
 
 
-import com.youzan.bigdata.streaming.nsq.NSQMessageWrapper
+import java.util.Properties
+
+import com.youzan.nsq.client.entity.NSQMessage
 import org.apache.spark.SparkConf
 import org.apache.spark.internal.Logging
 import org.apache.spark.storage.StorageLevel
@@ -40,9 +42,9 @@ import org.apache.spark.streaming.dstream._
 class NSQInputDStream(
      _ssc: StreamingContext,
      sparkConf: SparkConf,
-     nsqParams: Map[String, String],
-     storageLevel: StorageLevel = StorageLevel.MEMORY_ONLY_SER)
-  extends ReceiverInputDStream[NSQMessageWrapper](_ssc) with Logging {
+     nsqParams: Properties,
+     storageLevel: StorageLevel = StorageLevel.MEMORY_AND_DISK)
+  extends ReceiverInputDStream[NSQMessage](_ssc) with Logging {
 
   def getReceiver(): NSQReceiver = {
     if (sparkConf.get("spark.streaming.receiver.writeAheadLog.enable", "false").toBoolean)
