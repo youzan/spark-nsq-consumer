@@ -43,7 +43,7 @@ class NSQInputDStream(
      _ssc: StreamingContext,
      sparkConf: SparkConf,
      nsqParams: Properties,
-     storageLevel: StorageLevel = StorageLevel.MEMORY_ONLY_SER)
+     storageLevel: StorageLevel = StorageLevel.MEMORY_AND_DISK)
   extends ReceiverInputDStream[NSQMessage](_ssc) with Logging {
 
   def getReceiver(): NSQReceiver = {
