@@ -7,7 +7,8 @@ Reference to dev.properties files for configuration of nsq receiver. Try playing
 
 ## Maven dependency
 <b>CAUTION</b> 
-for nsq-client before 2.4
+for nsq-client before 2.4.2
+
 ```
 <dependency>
   <groupId>com.youzan.bigdata</groupId>
@@ -15,7 +16,8 @@ for nsq-client before 2.4
   <version>1.0.5</version>
 </dependency>
 ```
-after 2.4
+after 2.4.2
+
 ```
 <dependency>
   <groupId>com.youzan.bigdata</groupId>
