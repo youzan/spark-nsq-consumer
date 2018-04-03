@@ -1,7 +1,7 @@
 # spark nsq consumer
 A demo to apply nsq consumer as spark consumer. Consumer receives messages from NSQd and store with spark streaming API.
 Reference to dev.properties files for configuration of nsq receiver. Try playing with demo
-[NSQExample](http://gitlab.qima-inc.com/bigdata/spark-nsq-consumer/blob/branch-1.0/src/test/scala/com/youzan/bigdata/streaming/example/NSQExample.scala)
+[NSQExample](https://github.com/youzan/spark-nsq-consumer/blob/master/src/test/scala/com/youzan/bigdata/streaming/example/NSQExample.scala)
 <br>Usage: <br>
 ```NSQExample <checkpoint-directory> <parallism>```
 
